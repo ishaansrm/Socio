@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
+
                             @Override
                             public void onCompleted(
                                     JSONObject object,
@@ -146,8 +148,8 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onError(FacebookException e) {
                 Log.d(TAG, "FB LOGIN ERROR: " + e);
+                Toast.makeText(MainActivity.this, "FB LOGIN ERROR: " + e, Toast.LENGTH_SHORT).show();
             }
-
         });
     }
 
@@ -205,8 +207,7 @@ public class MainActivity extends AppCompatActivity implements
             // Show the signed-out UI
             try {
                 progress.dismiss();
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 Log.d(TAG, "no dialog to dismiss, must be first run");
             }
             Log.d(TAG, "blah");
@@ -241,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements
         Log.d(TAG, "onConnected:" + bundle);
         googleLogin = 1;
         mShouldResolve = false;
-        if(progress!=null)
+        if (progress != null)
             progress.dismiss();
 
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
