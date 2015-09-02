@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                progress = ProgressDialog.show(MainActivity.this, "Loading",
+                        "Shouldn't take long", true);
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+                                progress.dismiss();
                                 loggedIn();
                             }
                         });
